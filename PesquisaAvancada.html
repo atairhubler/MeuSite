@@ -4,162 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pesquisa Avançada</title>
-    <style>
-        /* Definição do tema roxo e verde */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
+    <link rel="stylesheet" href="styles.css">
 
-        header {
-            background-color: #6a0dad; /* Roxo */
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-
-        footer {
-            background-color: #6a0dad; /* Roxo */
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        /* Estilo da tabela */
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background-color: #ffffff;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #6a0dad; /* Roxo */
-            color: white;
-        }
-
-        td {
-            background-color: #e6e6e6; /* Verde claro */
-        }
-
-        tr:nth-child(even) td {
-            background-color: #d1d1d1; /* Tom de verde mais escuro */
-        }
-
-        tr:hover td {
-            background-color: #b3b3b3; /* Tom de verde mais claro no hover */
-        }
-
-        /* Estilo do filtro */
-        #filtro {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        #filtro input {
-            padding: 10px;
-            font-size: 16px;
-            margin-right: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        #filtro button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #6a0dad; /* Roxo */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #filtro button:hover {
-            background-color: #5c0c8f; /* Roxo mais escuro no hover */
-        }
-
-        /* Estilo dos botões (Voltar e Exportar CSV) lado a lado */
-        #botoes-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        #voltar-dashboard button,
-        #exportar-csv button {
-            padding: 10px 20px;
-            background-color: #6a0dad; /* Roxo */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #voltar-dashboard button:hover,
-        #exportar-csv button:hover {
-            background-color: #5c0c8f;
-        }
-    </style>
 </head>
 <body>
     <header>
         <h1>Lista de Check-in</h1>
     </header>
 
+    <div class="container">
+        
+        <!-- Pesquisa Avançada e Exportar CSV (lado a lado) -->
+        <section class="botao-container">
+            <!-- Botão para Voltar ao Dashboard -->
+            <section id="voltar-dashboard">
+                <button onclick="window.location.href='MeuSite.html'">Voltar ao Dashboard</button>
+            </section>
+            <!-- Botão Exportar CSV -->
+            <section id="exportar">
+                <button onclick="exportarCSV()">Exportar</button>
+            </section>
+        </section>
+    
+
+        <!-- Filtro de período -->
+        <section id="filtro">
+            <label for="dataInicio">Escolha um período:</label>
+            <input type="date" id="dataInicio">
+            <input type="date" id="dataFim">
+            <button onclick="filtrarPorPeriodo()">Pesquisar</button>
+        </section>
+    
+        <!-- Seção para exibição da tabela -->
+        <section id="lista">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome do Paciente</th>
+                        <th>Ambulatório</th>
+                        <th>Unidade</th>
+                        <th>Data e Hora de Início</th>
+                        <th>Prontuário</th> <!-- Novo campo -->
+                        <th>Sucesso</th> <!-- Novo campo -->
+                        <th>Origem</th> <!-- Novo campo -->
+                    </tr>
+                </thead>
+                <tbody id="lista-itens">
+                    <!-- A tabela será preenchida aqui via JavaScript -->
+                </tbody>
+            </table>
+        </section>    
+    </div>
     <!-- Container para os botões (Voltar ao Dashboard e Exportar CSV) -->
-    <section id="botoes-container">
-        <!-- Botão para Voltar ao Dashboard -->
-        <section id="voltar-dashboard">
-            <button onclick="window.location.href='MeuSite.html'">Voltar ao Dashboard</button>
-        </section>
-
-        <!-- Botão para Exportar CSV -->
-        <section id="exportar-csv">
-            <button onclick="exportarParaCSV()">Exportar para CSV</button>
-        </section>
-    </section>
-
-    <!-- Filtro de período -->
-    <section id="filtro">
-        <label for="dataInicio">Escolha um período:</label>
-        <input type="date" id="dataInicio">
-        <input type="date" id="dataFim">
-        <button onclick="filtrarPorPeriodo()">Pesquisar</button>
-    </section>
-
-    <!-- Seção para exibição da tabela -->
-    <section id="lista">
-        <table>
-            <thead>
-                <tr>
-                    <th>Nome do Paciente</th>
-                    <th>Ambulatório</th>
-                    <th>Unidade</th>
-                    <th>Data e Hora de Início</th>
-                    <th>Prontuário</th> <!-- Novo campo -->
-                    <th>Sucesso</th> <!-- Novo campo -->
-                    <th>Origem</th> <!-- Novo campo -->
-                </tr>
-            </thead>
-            <tbody id="lista-itens">
-                <!-- A tabela será preenchida aqui via JavaScript -->
-            </tbody>
-        </table>
-    </section>
-
+  
     <footer>
         <p>&copy; 2025 Meu Site. Todos os direitos reservados.</p>
     </footer>

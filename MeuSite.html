@@ -4,171 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial - Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-
-        header {
-            background-color: #6a0dad; /* Roxo */
-            padding: 20px;
-            text-align: center;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* Isso alinha logo à esquerda e o título no centro */
-        }
-
-        header img {
-            width: 50px; /* Ajuste o tamanho do logo */
-            height: auto;
-            position: absolute;
-            left: 20px; /* Ajuste a distância do logo da borda esquerda */
-        }
-
-        header h1 {
-            flex: 1;
-            text-align: center; /* Centraliza o título */
-            margin: 0;
-        }
-
-        footer {
-            background-color: #6a0dad; /* Roxo */
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        /* Filtro de Data */
-        #filtro {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        #filtro input {
-            padding: 10px;
-            font-size: 16px;
-            margin-right: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        #filtro button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #6a0dad; /* Roxo */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #filtro button:hover {
-            background-color: #5c0c8f; /* Roxo mais escuro no hover */
-        }
-
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Layout para duas tabelas por linha */
-        .tabelas-linha {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Duas colunas */
-            gap: 20px;
-        }
-
-        /* Estilo para as tabelas */
-        .tabela-container {
-            width: 100%;
-            text-align: center;
-        }
-
-        table {
-            width: 100%; /* Ajusta para ocupar 50% do container */
-            margin: 20px 0;
-            border-collapse: collapse;
-            background-color: #ffffff;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #6a0dad; /* Roxo */
-            color: white;
-        }
-
-        td {
-            background-color: #e6e6e6; /* Verde claro */
-        }
-
-        tr:nth-child(even) td {
-            background-color: #d1d1d1; /* Tom de verde mais escuro */
-        }
-
-        tr:hover td {
-            background-color: #b3b3b3; /* Tom de verde mais claro no hover */
-        }
-
-        /* Estilo do botão "Pesquisa Avançada" */
-        #pesquisa-avancada {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        #pesquisa-avancada button {
-            padding: 10px 20px;
-            background-color: #6a0dad;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #pesquisa-avancada button:hover {
-            background-color: #5c0c8f;
-        }
-
-        /* Estilo para o botão de exportação (alinhado ao lado do filtro) */
-        #exportar {
-            text-align: left;
-            margin-top: 20px;
-        }
-
-        #exportar button {
-            padding: 10px 20px;
-            background-color: #6a0dad;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #exportar button:hover {
-            background-color: #5c0c8f;
-        }
-
-        /* Alinhar os botões lado a lado */
-        .botao-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="styles.css">
 
     <!-- Biblioteca xlsx -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
@@ -179,9 +15,16 @@
         <img src="be3.png" alt="Logo">
         <!-- Título centralizado -->
         <h1>Dashboard - Relatórios de Atividades</h1>
+        <section Class="filtr-servico">
+            <select id="myCombobox">
+                <option value="">Carregando...</option>
+            </select>
+        </section>
+
     </header>
 
     <div class="container">
+        
         <!-- Pesquisa Avançada e Exportar CSV (lado a lado) -->
         <section class="botao-container">
             <!-- Botão Pesquisa Avançada -->
@@ -193,6 +36,8 @@
                 <button onclick="exportarCSV()">Exportar</button>
             </section>
         </section>
+
+       
 
         <!-- Filtro de período -->
         <section id="filtro">
@@ -279,148 +124,7 @@
     <footer>
         <p>&copy; 2025 Meu Site. Todos os direitos reservados.</p>
     </footer>
-
     <!-- Script para carregar dados e interagir com a API -->
-    <script>
-        // Variáveis para armazenar os dados da API
-        let dadosApi = [];
-
-        // Função para buscar os dados da API
-        async function filtrarPorPeriodo() {
-            let dataInicio = document.getElementById('dataInicio').value;
-            let dataFim = document.getElementById('dataFim').value;
-
-            // Se as datas de início ou fim não forem preenchidas, usa a data atual como padrão
-            if (!dataInicio || !dataFim) {
-                alert('Por favor, selecione as duas datas para o período.');
-                return;
-            }
-
-            // Formatar as datas antes de enviar para a API
-            dataInicio = formatarData(dataInicio);
-            dataFim = formatarData(dataFim);
-
-            // Função para formatar a data no formato DD/MM/YYYY
-            function formatarData(data) {
-            const [ano, mes, dia] = data.split('-');
-            return `${dia}/${mes}/${ano}`;
-            }
-
-            
-            try {
-                
-                // CHAMA A API DE QUANTIDADE DE CHECK-IN COM FILTRO DE DATA (startDate e endDate)
-                const response = await fetch(`https://localhost:7272/GetQuantidadeCheckin?startDate=${dataInicio}&endDate=${dataFim}`);
-                // CHAMA A API DE QUANTIDADE DE WEBCHECK-IN COM FILTRO DE DATA (startDate e endDate)
-                //const response2 = await fetch(`https://localhost:7272/GetQuantidadeWebcheckin?startDate=${dataInicio}&endDate=${dataFim}`);
-                // CHAMA A API DE QUANTIDADE DE SENHAS GERADAS COM FILTRO DE DATA (startDate e endDate)
-                //const response3 = await fetch(`https://localhost:7272/GetQuantidadeSenhasGeradas?startDate=${dataInicio}&endDate=${dataFim}`);
-                // CHAMA A API DE QUANTIDADE DOCUMENTOS ASSINADOS COM FILTRO DE DATA (startDate e endDate)
-                //const response4 = await fetch(`https://localhost:7272/GetQuantidadeDocumentosAssinados?startDate=${dataInicio}&endDate=${dataFim}`);
-                
-                // Verifica se alguma resposta da API não foi bem-sucedida (status 200)
-                if (!response.ok) {
-                    throw new Error('Falha ao carregar response');
-                }
-                /*
-                if (!response2.ok) {
-                    throw new Error('Falha ao carregar response2');
-                }
-                if (!response3.ok) {
-                    throw new Error('Falha ao carregar response3');
-                }
-                if (!response4.ok) {
-                    throw new Error('Falha ao carregar response4');
-                }
-                */
-                // Converte os dados recebidos da API em formato JSON
-                dadosApi = await response.json();
-                //dadosApi2 = await response2.json();
-                //dadosApi3 = await response3.json();                
-                //dadosApi4 = await response4.json();                
-
-                const quantidadeCheckin = dadosApi[0]?.quantidadeCheckin;
-                //const quantidadeWebCheckin = dadosApi2[0]?.quantidadeWebCheckin;
-                //const quantidadeSenhasGeradas = dadosApi3[0]?.quantidadeSenhasGeradas;
-                //const quantidadeDocumentosAssinados = dadosApi4[0]?.quantidadeDocumentosAssinados;
-
-                 // Verificar os dados recebidos
-                console.log('Dados recebidos da API após converter para json :', dadosApi);
-                
-                // Exibe os dados filtrados na tabela
-                exibirLista(quantidadeCheckin);
-               // exibirLista2(quantidadeWebCheckin);
-               // exibirLista3(quantidadeSenhasGeradas);
-               // exibirLista4(quantidadeDocumentosAssinados);
-
-                 
-            } catch (error) {
-                console.error('Erro ao carregar os dados:', error);
-            }
-        }
-    
-        // Função para atualizar as tabelas com os dados da API
-        function exibirLista(quantidadeCheckin) {
-
-            const quantidadeCheckinElemento = document.getElementById('quantidadeCheckin');
-    
-            if (quantidadeCheckinElemento) {
-                quantidadeCheckinElemento.textContent = quantidadeCheckin || '0'; // Caso não exista dado, mostrar '0'
-            }
-         };
-        
-         /*function exibirLista(quantidadeWebCheckin) {
-
-            const qquantidadeWebcheckinElemento = document.getElementById('quantidadeWebcheckin');
-    
-            if (quantidadeWebcheckinElemento) {
-                quantidadeWebcheckinElemento.textContent = quantidadeWebCheckin || '0'; // Caso não exista dado, mostrar '0'
-            }
-         };        
-        //function exibirLista(quantidadeSenhasGeradas) {
-
-            const tabelaSenhasGeradasElemento = document.getElementById('quantidadeSenhasGeradas');
-    
-            if (quantidadeSenhasGeradasElemento) {
-                quantidadeSenhasGeradasElemento.textContent = quantidadeSenhasGeradas || '0'; // Caso não exista dado, mostrar '0'
-            }
-         };
-        //function exibirLista(quantidadeDocumentosAssinados) {
-
-            const documentosAssinadosTabelaElemento = document.getElementById('documentosAssinadosTabela');
-    
-            if (documentosAssinadosTabelaElemento) {
-                documentosAssinadosTabelaElemento.textContent = documentosAssinadosTabela || '0'; // Caso não exista dado, mostrar '0'
-            }
-         };
-         */
-        
-         // Função para exportar os dados para CSV
-        function exportarCSV() {
-            const wb = XLSX.utils.book_new();
-
-            // Adiciona as abas
-            const tabelaCheckin = document.getElementById('tabelaCheckin');
-            const checkinData = XLSX.utils.table_to_sheet(tabelaCheckin);
-            XLSX.utils.book_append_sheet(wb, checkinData, "Check-ins");
-
-            const tabelaWebcheckin = document.getElementById('tabelaWebcheckin');
-            const webcheckinData = XLSX.utils.table_to_sheet(tabelaWebcheckin);
-            XLSX.utils.book_append_sheet(wb, webcheckinData, "Webcheck-ins");
-
-            const tabelaDocumentosAssinados = document.getElementById('tabelaDocumentosAssinados');
-            const documentosAssinadosData = XLSX.utils.table_to_sheet(tabelaDocumentosAssinados);
-            XLSX.utils.book_append_sheet(wb, documentosAssinadosData, "Documentos Assinados");
-
-            const tabelaSenhasGeradas = document.getElementById('tabelaSenhasGeradas');
-            const senhasGeradasData = XLSX.utils.table_to_sheet(tabelaSenhasGeradas);
-            XLSX.utils.book_append_sheet(wb, senhasGeradasData, "Senhas Geradas");
-
-            XLSX.writeFile(wb, "Dashboard_Resultado.xlsx");
-        }
-
-        // Chama a função para carregar os dados assim que a página for carregada
-        //window.onload = filtrarPorPeriodo();
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>

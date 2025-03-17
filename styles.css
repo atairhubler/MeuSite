@@ -1,0 +1,187 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background-color: #6a0dad; /* Roxo */
+    padding: 20px;
+    text-align: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Isso alinha logo à esquerda e o título no centro */
+}
+
+header img {
+    width: 50px; /* Ajuste o tamanho do logo */
+    height: auto;
+    position: absolute;
+    left: 20px; /* Ajuste a distância do logo da borda esquerda */
+}
+
+header h1 {
+    flex: 1;
+    text-align: center; /* Centraliza o título */
+    margin: 0;
+}
+
+footer {
+    background-color: #6a0dad; /* Roxo */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Filtro de Data */
+#filtro {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#filtro input {
+    padding: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#filtro button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #6a0dad; /* Roxo */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#filtro button:hover {
+    background-color: #5c0c8f; /* Roxo mais escuro no hover */
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Layout para duas tabelas por linha */
+.tabelas-linha {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas */
+    gap: 20px;
+}
+
+/* Estilo para as tabelas */
+.tabela-container {
+    width: 100%;
+    text-align: center;
+}
+
+table {
+    width: 100%; /* Ajusta para ocupar 50% do container */
+    margin: 20px 0;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #6a0dad; /* Roxo */
+    color: white;
+}
+
+td {
+    background-color: #e6e6e6; /* Verde claro */
+}
+
+tr:nth-child(even) td {
+    background-color: #d1d1d1; /* Tom de verde mais escuro */
+}
+
+tr:hover td {
+    background-color: #b3b3b3; /* Tom de verde mais claro no hover */
+}
+
+/* Estilo do botão "Pesquisa Avançada" */
+#pesquisa-avancada {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#pesquisa-avancada button {
+    padding: 10px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#pesquisa-avancada button:hover {
+    background-color: #5c0c8f;
+}
+
+#voltar-dashboard {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#voltar-dashboard button {
+    padding: 10px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#voltar-dashboard button:hover {
+    background-color: #5c0c8f;
+}
+
+/* Estilo para o botão de exportação (alinhado ao lado do filtro) */
+#exportar {
+    text-align: right;
+    margin-top: 20px;
+}
+
+#exportar button {
+    padding: 10px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#exportar button:hover {
+    background-color: #5c0c8f;
+}
+
+/* Alinhar os botões lado a lado */
+.botao-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+#myCombobox {
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
