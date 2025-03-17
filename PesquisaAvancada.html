@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa Avançada</title>
+    <style>
+        /* Definição do tema roxo e verde */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #6a0dad; /* Roxo */
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        footer {
+            background-color: #6a0dad; /* Roxo */
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Estilo da tabela */
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #ffffff;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #6a0dad; /* Roxo */
+            color: white;
+        }
+
+        td {
+            background-color: #e6e6e6; /* Verde claro */
+        }
+
+        tr:nth-child(even) td {
+            background-color: #d1d1d1; /* Tom de verde mais escuro */
+        }
+
+        tr:hover td {
+            background-color: #b3b3b3; /* Tom de verde mais claro no hover */
+        }
+
+        /* Estilo do filtro */
+        #filtro {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #filtro input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #filtro button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #6a0dad; /* Roxo */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #filtro button:hover {
+            background-color: #5c0c8f; /* Roxo mais escuro no hover */
+        }
+
+        /* Estilo dos botões (Voltar e Exportar CSV) lado a lado */
+        #botoes-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        #voltar-dashboard button,
+        #exportar-csv button {
+            padding: 10px 20px;
+            background-color: #6a0dad; /* Roxo */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #voltar-dashboard button:hover,
+        #exportar-csv button:hover {
+            background-color: #5c0c8f;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lista de Check-in</h1>
+    </header>
+
+    <!-- Container para os botões (Voltar ao Dashboard e Exportar CSV) -->
+    <section id="botoes-container">
+        <!-- Botão para Voltar ao Dashboard -->
+        <section id="voltar-dashboard">
+            <button onclick="window.location.href='MeuSite.html'">Voltar ao Dashboard</button>
+        </section>
+
+        <!-- Botão para Exportar CSV -->
+        <section id="exportar-csv">
+            <button onclick="exportarParaCSV()">Exportar para CSV</button>
+        </section>
+    </section>
+
+    <!-- Filtro de período -->
+    <section id="filtro">
+        <label for="dataInicio">Escolha um período:</label>
+        <input type="date" id="dataInicio">
+        <input type="date" id="dataFim">
+        <button onclick="filtrarPorPeriodo()">Pesquisar</button>
+    </section>
+
+    <!-- Seção para exibição da tabela -->
+    <section id="lista">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome do Paciente</th>
+                    <th>Ambulatório</th>
+                    <th>Unidade</th>
+                    <th>Data e Hora de Início</th>
+                    <th>Prontuário</th> <!-- Novo campo -->
+                    <th>Sucesso</th> <!-- Novo campo -->
+                    <th>Origem</th> <!-- Novo campo -->
+                </tr>
+            </thead>
+            <tbody id="lista-itens">
+                <!-- A tabela será preenchida aqui via JavaScript -->
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Meu Site. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Script JavaScript para chamar a API e filtrar os dados -->
+    <script>
+        let dadosApi = []; // Variável para armazenar os dados da API
+
+        // Função para filtrar os dados por um intervalo de datas (início e fim)
+        async function filtrarPorPeriodo() {
+            let dataInicio = document.getElementById('dataInicio').value;
+            let dataFim = document.getElementById('dataFim').value;
+
+            // Se as datas de início ou fim não forem preenchidas, usa a data atual como padrão
+            if (!dataInicio || !dataFim) {
+                alert('Por favor, selecione as duas datas para o período.');
+                return;
+            }
+
+            // Formatar as datas antes de enviar para a API
+            dataInicio = formatarData(dataInicio);
+            dataFim = formatarData(dataFim);
+
+            // Função para formatar a data no formato DD/MM/YYYY
+            function formatarData(data) {
+            const [ano, mes, dia] = data.split('-');
+            return `${dia}/${mes}/${ano}`;
+            }
+
+            try {
+                // Chama a API com o filtro de data (dataInicio e dataFim)
+                const response = await fetch(`https://localhost:7272/ListaDeUsuarios?startDate=${dataInicio}&endDate=${dataFim}`);
+                
+                // Verifica se a resposta da API foi bem-sucedida (status 200)
+                if (!response.ok) {
+                    throw new Error('Falha ao carregar os dados');
+                }
+
+                // Converte os dados recebidos da API em formato JSON
+                dadosApi = await response.json();
+
+                 // Verificar os dados recebidos
+                console.log('Dados recebidos da API:', dadosApi);
+                
+                // Exibe os dados filtrados na tabela
+                exibirLista(dadosApi);
+            } catch (error) {
+                // Exibe uma mensagem de erro caso haja falha na requisição
+                console.error('Erro ao carregar os dados:', error);
+            }
+        }
+
+        // Função para exibir os dados na tabela
+        function exibirLista(dados) {
+            const listaItens = document.getElementById('lista-itens');
+            listaItens.innerHTML = ''; // Limpa a tabela antes de adicionar novos dados
+
+            console.log('Exibindo dados na tabela:', dados); // Verificar dados antes de exibir
+
+            // Itera sobre os dados e cria as linhas da tabela
+            dados.forEach(item => {
+                const tr = document.createElement('tr');
+                
+                // Coluna Nome do Paciente
+                const tdNomePaciente = document.createElement('td');
+                tdNomePaciente.textContent = item.nomePaciente;
+                tr.appendChild(tdNomePaciente);
+
+                // Coluna Ambulatório
+                const tdAmbulatorio = document.createElement('td');
+                tdAmbulatorio.textContent = item.ambulatorio ? item.ambulatorio : 'Não disponível';
+                tr.appendChild(tdAmbulatorio);
+
+                // Coluna Unidade
+                const tdUnidade = document.createElement('td');
+                tdUnidade.textContent = item.unidade ? item.unidade : 'Não disponível';
+                tr.appendChild(tdUnidade);
+
+
+                // Coluna Data e Hora de Início
+                const tdDataHoraInicio = document.createElement('td');
+                if (item.dataHoraInicio) {
+                    const dataHoraInicioArray = item.dataHoraInicio.split(' '); // Separa data e hora
+                    const dataArray = dataHoraInicioArray[0].split('/'); // Separa a data
+                    const hora = dataHoraInicioArray[1];
+
+                    // Formata a data no formato esperado (YYYY-MM-DDTHH:mm:ss)
+                    const dataHoraInicioFormatada = `${dataArray[2]}-${dataArray[0]}-${dataArray[1]}T${hora}`;
+                    tdDataHoraInicio.textContent = new Date(dataHoraInicioFormatada).toLocaleString('pt-BR');
+                } else {
+                    tdDataHoraInicio.textContent = 'Data inválida';
+                }
+                tr.appendChild(tdDataHoraInicio);
+
+                // Coluna Prontuário
+                const tdProntuario = document.createElement('td');
+                tdProntuario.textContent = item.prontuario ? item.prontuario : 'Não disponível';
+                tr.appendChild(tdProntuario);
+
+                // Coluna Sucesso
+                const tdSucesso = document.createElement('td');
+                tdSucesso.textContent = item.sucesso === 1 ? 'Sim' : 'Não';
+                tr.appendChild(tdSucesso);
+
+                // Coluna Origem
+                const tdOrigem = document.createElement('td');
+                tdOrigem.textContent = item.origem ? item.origem : 'Não disponível';
+                tr.appendChild(tdOrigem);
+
+                listaItens.appendChild(tr);
+            });
+        }
+
+        // Função para exportar os dados filtrados para CSV
+        function exportarParaCSV() {
+            const tabela = document.getElementById('lista-itens');
+            const linhas = Array.from(tabela.rows);
+            let csvContent = 'Nome do Paciente,Ambulatório,Unidade,Data e Hora de Início,Prontuário,Sucesso,Origem\n';
+
+            linhas.forEach(linha => {
+                const colunas = Array.from(linha.cells);
+                const dados = colunas.map(coluna => coluna.textContent).join(',');
+                csvContent += dados + '\n';
+            });
+
+            // Criar um link para download do arquivo CSV
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'usuarios_exportados.csv';
+            link.click();
+        }
+    </script>
+</body>
+</html>
