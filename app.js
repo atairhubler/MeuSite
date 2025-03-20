@@ -91,7 +91,7 @@
 
  document.addEventListener("DOMContentLoaded", function () {
     // URL da sua API
-    const apiUrl = "https://exemplo.com/api/dados"; // Substitua pela sua URL da API
+    //const apiUrl = "https://exemplo.com/api/dados"; // Substitua pela sua URL da API
 
     // Função para preencher o combobox
     function populateCombobox(data) {

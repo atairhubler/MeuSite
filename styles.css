@@ -172,6 +172,24 @@ tr:hover td {
     background-color: #5c0c8f;
 }
 
+#Estatisticas {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#Estatisticas button {
+    padding: 10px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#Estatisticas button:hover {
+    background-color: #5c0c8f;
+}
+
 /* Alinhar os botões lado a lado */
 .botao-container {
     display: flex;

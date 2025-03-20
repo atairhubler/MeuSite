@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background-color: #6a0dad; /* Roxo */
+    padding: 20px;
+    text-align: center;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Isso alinha logo à esquerda e o título no centro */
+}
+
+header img {
+    width: 50px; /* Ajuste o tamanho do logo */
+    height: auto;
+    position: absolute;
+    left: 20px; /* Ajuste a distância do logo da borda esquerda */
+}
+
+header h1 {
+    flex: 1;
+    text-align: center; /* Centraliza o título */
+    margin: 0;
+}
+
+footer {
+    background-color: #6a0dad; /* Roxo */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Filtro de Data */
+#filtro {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#filtro input {
+    padding: 10px;
+    font-size: 16px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+#filtro button {
+    padding: 10px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#filtro button:hover {
+    background-color: #8e44ad;
+}
+
+/* Layout para duas tabelas por linha */
+.tabelas-linha {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ; /* Duas colunas de tamanho igual */
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Ajustando a largura da tabela */
+.tabela-container {
+    width: 100%;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #6a0dad;
+    color: white;
+}
+
+/* Ajustando o estilo do gráfico */
+.grafico-container,
+.grafico-linhas-container {
+    width: 100%;
+    height: 300px;
+}
+
+/* Adicionalmente, se você quer controlar o tamanho do gráfico e da tabela ao lado, pode aplicar um tamanho fixo */
+.tabela-container, .grafico-container {
+    max-width: 100%;
+}
+
+/* Assegura que a tabela e o gráfico fiquem na mesma linha */
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
