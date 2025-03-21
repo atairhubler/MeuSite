@@ -117,3 +117,24 @@ table th {
     gap: 20px;
     padding: 20px;
 }
+
+
+@keyframes example {
+    from {filter: hue-rotate(0);}
+    to {filter: hue-rotate(360deg);}
+  }
+  #graficoCheckinsDia {
+    animation-name: example;
+    animation-duration: 1000s;
+    animation-iteration-count: infinite;
+    animation-delay: 0ms;
+  }
+  .festa{
+    animation-duration: 0.1s !important;
+  }
+
+  .sapinho-gif {
+    position: absolute;
+    width: 100px;  /* Ajuste o tamanho do GIF conforme necessário */
+    height: auto;
+}
