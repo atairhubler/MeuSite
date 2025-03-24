@@ -39,32 +39,6 @@ footer {
     width: 100%;
 }
 
-/* Filtro de Data */
-#filtro {
-    text-align: center;
-    margin: 20px 0;
-}
-
-#filtro input {
-    padding: 10px;
-    font-size: 16px;
-    margin-right: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-#filtro button {
-    padding: 10px 20px;
-    background-color: #6a0dad;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#filtro button:hover {
-    background-color: #8e44ad;
-}
 
 /* Layout para duas tabelas por linha */
 .tabelas-linha {
