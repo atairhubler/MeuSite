@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial - Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./stylesMenuPrincipal.css">
 
     <!-- Biblioteca xlsx -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
@@ -12,7 +12,7 @@
 <body>
     <header>
         <!-- Logo no canto esquerdo -->
-        <img src="be3.png" alt="Logo">
+        <img src="../assets/be3.png" alt="Logo">
         <!-- Título centralizado -->
         <h1>Dashboard - Relatórios de Atividades</h1>
         <section Class="filtrar-servico">
@@ -29,10 +29,10 @@
         <section class="botao-container">
             <!-- Botão Pesquisa Avançada -->
             <section id="pesquisa-avancada">
-                <button onclick="window.location.href='PesquisaAvancada.html'">Pesquisa Avançada</button>
+                <button onclick="window.location.href='../PesquisaAvancada/PesquisaAvancada.html'">Pesquisa Avançada</button>
             </section>
             <section id="Estatisticas">
-                <button onclick="window.location.href='Estatisticas.html'">Estatisticas</button>
+                <button onclick="window.location.href='../Estatisticas/Estatisticas.html'">Estatisticas</button>
             </section>
             <!-- Botão Exportar CSV -->
             <section id="exportar">
@@ -128,6 +128,6 @@
         <p>&copy; 2025 Meu Site. Todos os direitos reservados.</p>
     </footer>
     <!-- Script para carregar dados e interagir com a API -->
-    <script src="app.js"></script>
+    <script src="app_MenuPrincipal.js"></script>
 </body>
 </html>

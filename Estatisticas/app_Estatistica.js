@@ -1,13 +1,24 @@
 let graficoLinhas = null;
         let graficoBarras = null;
         let barColors = [];
+        
+        let dataHoje = new Date();
+        let dia = dataHoje.getDate();
+        let mes = dataHoje.getMonth()+1;
+        let ano = dataHoje.getFullYear();
+        let dataFormatada = `${dia}/${mes}/${ano}`;
+
         fetchData();
         fetchDataLine();
         
         async function fetchData() {
             try {
-                const response = await fetch('https://localhost:7272/EstatisticaCheckin?startDate=21%2F03%2F2025&endDate=22%2F03%2F2025');
                 
+                const response = await fetch(`https://localhost:7272/EstatisticaCheckin?startDate=${dataFormatada}&endDate=${dataFormatada}`);
+                //const response = await fetch(`https://api-paineljornada-tst.accamargo.org.br/EstatisticaCheckin?startDate=${dataFormatada}&endDate=${dataFormatada}`); 
+                
+
+
                 if (!response.ok) {
                     throw new Error('Erro ao buscar dados');
                 }
