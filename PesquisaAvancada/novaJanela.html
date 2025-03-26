@@ -4,46 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Check-in</title>
+    <link rel="stylesheet" href="../MenuPrincipal/stylesMenuPrincipal.css">
 </head>
 <body>
     <h1>Detalhes do Check-in</h1>
 
     <table id="tabela1">
         <thead>
-            <tr>
-                <th>Coluna 1</th>
-                <th>Coluna 2</th>
-            </tr>
+            <tr></tr> <!-- As colunas serão geradas aqui -->
         </thead>
         <tbody></tbody>
     </table>
 
     <table id="tabela2">
         <thead>
-            <tr>
-                <th>Coluna 1</th>
-                <th>Coluna 2</th>
-            </tr>
+            <tr></tr> <!-- As colunas serão geradas aqui -->
         </thead>
         <tbody></tbody>
     </table>
 
     <table id="tabela3">
         <thead>
-            <tr>
-                <th>Coluna 1</th>
-                <th>Coluna 2</th>
-            </tr>
+            <tr></tr> <!-- As colunas serão geradas aqui -->
         </thead>
         <tbody></tbody>
     </table>
 
     <table id="tabela4">
         <thead>
-            <tr>
-                <th>Coluna 1</th>
-                <th>Coluna 2</th>
-            </tr>
+            <tr></tr> <!-- As colunas serão geradas aqui -->
         </thead>
         <tbody></tbody>
     </table>
@@ -61,7 +50,7 @@
 
             try {
                 // Substitua pelos endpoints corretos da API
-                const response1 = await fetch(`https://localhost:7272/api/tabela1?id=${id}`);
+                const response1 = await fetch(`https://localhost:7272/GetAcompanhamento?idCheckin=CB0B753B-5A0A-F011-ABF4-02A32A4A416A`);
                 const data1 = await response1.json();
                 exibirTabela('tabela1', data1);
 
@@ -85,18 +74,38 @@
         // Função para exibir os dados na tabela
         function exibirTabela(tabelaId, dados) {
             const tabela = document.getElementById(tabelaId);
+            const thead = tabela.querySelector('thead tr');
             const tbody = tabela.querySelector('tbody');
             tbody.innerHTML = '';  // Limpa a tabela antes de adicionar novos dados
 
-            dados.forEach(item => {
-                const tr = document.createElement('tr');
-                Object.values(item).forEach(valor => {
-                    const td = document.createElement('td');
-                    td.textContent = valor;
-                    tr.appendChild(td);
+            if (dados.length > 0) {
+                // Criação das colunas dinamicamente a partir das chaves do primeiro item
+                const colunas = Object.keys(dados[0]);  // Pega as chaves do primeiro item
+                colunas.forEach(coluna => {
+                    const th = document.createElement('th');
+                    th.textContent = coluna;  // Define o nome da coluna com a chave
+                    thead.appendChild(th);  // Adiciona ao cabeçalho da tabela
                 });
+
+                // Adiciona as linhas
+                dados.forEach(item => {
+                    const tr = document.createElement('tr');
+                    colunas.forEach(coluna => {
+                        const td = document.createElement('td');
+                        td.textContent = item[coluna];  // Preenche a célula com o valor da chave
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+            } else {
+                // Caso não haja dados, exibe uma mensagem
+                const tr = document.createElement('tr');
+                const td = document.createElement('td');
+                td.setAttribute('colspan', '100%');
+                td.textContent = 'Nenhum dado encontrado';
+                tr.appendChild(td);
                 tbody.appendChild(tr);
-            });
+            }
         }
 
         // Carregar as tabelas assim que a página for carregada
