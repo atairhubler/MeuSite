@@ -8,7 +8,7 @@ async function filtrarPorPeriodo() {
     let dataInicioNF = document.getElementById('dataInicio').value;
     let dataFimNF = document.getElementById('dataFim').value;
     let prontuario = document.getElementById('filtroProntuario').value
-    
+
 
     // Se as datas de início ou fim não forem preenchidas, usa a data atual como padrão
     if (!dataInicio || !dataFim) {
@@ -22,21 +22,21 @@ async function filtrarPorPeriodo() {
 
     // Função para formatar a data no formato DD/MM/YYYY
     function formatarData(data) {
-    const [ano, mes, dia] = data.split('-');
-    return `${dia}/${mes}/${ano}`;
+        const [ano, mes, dia] = data.split('-');
+        return `${dia}/${mes}/${ano}`;
     }
 
     try {
-        
-        if(prontuario == null){
+
+        if (prontuario == null) {
             // Chama a API com o filtro de data (dataInicio, dataFim e Idservico)
-            const response = await fetch(`https://localhost:7272/GetAllCheckin?startDate=${encodeURIComponent(dataInicio)}&endDate=${encodeURIComponent(dataFim)}&IdServico=${servicoID}`);        
+            const response = await fetch(`https://localhost:7272/GetAllCheckin?startDate=${encodeURIComponent(dataInicio)}&endDate=${encodeURIComponent(dataFim)}&IdServico=${servicoID}`);
         }
-             
-           // Chama a API com o filtro de data (dataInicio, dataFim, Idservico e prontuario)
-           const response = await fetch(`https://localhost:7272/GetAllCheckin?startDate=${encodeURIComponent(dataInicio)}&endDate=${encodeURIComponent(dataFim)}&prontuario=${prontuario}&IdServico=${servicoID}`);        
-        
-  
+
+        // Chama a API com o filtro de data (dataInicio, dataFim, Idservico e prontuario)
+        const response = await fetch(`https://localhost:7272/GetAllCheckin?startDate=${encodeURIComponent(dataInicio)}&endDate=${encodeURIComponent(dataFim)}&prontuario=${prontuario}&IdServico=${servicoID}`);
+
+
         // Verifica se a resposta da API foi bem-sucedida (status 200)
         if (!response.ok) {
             throw new Error('Falha ao carregar os dados');
@@ -45,9 +45,9 @@ async function filtrarPorPeriodo() {
         // Converte os dados recebidos da API em formato JSON
         dadosApi = await response.json();
 
-         // Verificar os dados recebidos
+        // Verificar os dados recebidos
         console.log('Dados recebidos da API:', dadosApi);
-        
+
         // Exibe os dados filtrados na tabela
         exibirLista(dadosApi);
     } catch (error) {
@@ -64,7 +64,8 @@ function filtrarPorProntuario() {
     dadosFiltrados = dadosApi.filter(item => {
         // Se o prontuário do item incluir o valor digitado no filtro (considerando a comparação case-insensitive)
         return item.prontuario && item.prontuario.toString().toLowerCase().includes(prontuarioFiltro);
-    })};
+    })
+};
 
 // Função para exibir os dados na tabela
 function exibirLista(dados) {
@@ -76,12 +77,18 @@ function exibirLista(dados) {
     // Itera sobre os dados e cria as linhas da tabela
     dados.forEach(item => {
         const tr = document.createElement('tr');
-      
+
         // Coluna Id
         const tdId = document.createElement('td');
-        tdId.textContent = item.id;
+        const link = document.createElement('a');
+        link.href = '#';
+        link.textContent = item.id;
+        link.onclick = function () {
+            abrirNovaJanela(item.id);  // Passa o ID para a função que abre a nova janela
+        };
+        tdId.appendChild(link);
         tr.appendChild(tdId);
-        
+
         // Coluna Nome do Paciente
         const tdNomePaciente = document.createElement('td');
         tdNomePaciente.textContent = item.nomePaciente;
@@ -132,17 +139,24 @@ function exibirLista(dados) {
     });
 }
 
+function abrirNovaJanela(id) {
+    // Aqui você abre a nova janela com o ID como parâmetro na URL
+    const url = `novaJanela.html?id=${id}`;  // Passando o ID como parâmetro na URL
+    window.open(url, '_blank');  // Define o tamanho da janela
+}
+
+
 // Função para carregar as opções da API
 async function carregarOpcoes() {
-const combobox = document.getElementById("myComboboxPesquisaAvancada"); // Obtém o elemento select
-combobox.innerHTML = '<option value="">Carregando...</option>'; // Exibe mensagem de carregamento
+    const combobox = document.getElementById("myComboboxPesquisaAvancada"); // Obtém o elemento select
+    combobox.innerHTML = '<option value="">Carregando...</option>'; // Exibe mensagem de carregamento
 
     try {
         const response = await fetch('https://localhost:7272/GetServicos'); // Substitua pela URL da sua API
         const data = await response.json(); // Supondo que a resposta seja um JSON
-    
+
         // Limpa o conteúdo atual do select
-        combobox.innerHTML = ''; 
+        combobox.innerHTML = '';
 
         // Adiciona uma opção padrão
         combobox.innerHTML += '<option value="">Selecione um serviço</option>';

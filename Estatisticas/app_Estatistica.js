@@ -208,7 +208,6 @@ function updateTable(clientes, checkinsDia) {
         const cellCliente = row.insertCell(0);
         const cellCheckins = row.insertCell(1);
 
-        //cellCliente.textContent = cliente;
 
         // Criando um link dinâmico com base no nome do cliente
         const link = document.createElement('a');

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Check-in</title>
+</head>
+<body>
+    <h1>Detalhes do Check-in</h1>
+
+    <table id="tabela1">
+        <thead>
+            <tr>
+                <th>Coluna 1</th>
+                <th>Coluna 2</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <table id="tabela2">
+        <thead>
+            <tr>
+                <th>Coluna 1</th>
+                <th>Coluna 2</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <table id="tabela3">
+        <thead>
+            <tr>
+                <th>Coluna 1</th>
+                <th>Coluna 2</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <table id="tabela4">
+        <thead>
+            <tr>
+                <th>Coluna 1</th>
+                <th>Coluna 2</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        // Função para obter o parâmetro 'id' da URL
+        function obterParametroId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Função para carregar as 4 tabelas
+        async function carregarTabelas() {
+            const id = obterParametroId();  // Obtém o ID da URL
+
+            try {
+                // Substitua pelos endpoints corretos da API
+                const response1 = await fetch(`https://localhost:7272/api/tabela1?id=${id}`);
+                const data1 = await response1.json();
+                exibirTabela('tabela1', data1);
+
+                const response2 = await fetch(`https://localhost:7272/api/tabela2?id=${id}`);
+                const data2 = await response2.json();
+                exibirTabela('tabela2', data2);
+
+                const response3 = await fetch(`https://localhost:7272/api/tabela3?id=${id}`);
+                const data3 = await response3.json();
+                exibirTabela('tabela3', data3);
+
+                const response4 = await fetch(`https://localhost:7272/api/tabela4?id=${id}`);
+                const data4 = await response4.json();
+                exibirTabela('tabela4', data4);
+
+            } catch (error) {
+                console.error('Erro ao carregar as tabelas:', error);
+            }
+        }
+
+        // Função para exibir os dados na tabela
+        function exibirTabela(tabelaId, dados) {
+            const tabela = document.getElementById(tabelaId);
+            const tbody = tabela.querySelector('tbody');
+            tbody.innerHTML = '';  // Limpa a tabela antes de adicionar novos dados
+
+            dados.forEach(item => {
+                const tr = document.createElement('tr');
+                Object.values(item).forEach(valor => {
+                    const td = document.createElement('td');
+                    td.textContent = valor;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Carregar as tabelas assim que a página for carregada
+        window.onload = carregarTabelas;
+    </script>
+</body>
+</html>
