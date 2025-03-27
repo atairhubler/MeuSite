@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Garante que o body ocupe pelo menos 100% da altura da tela */
+}
+
+header {
+    background-color: #6a0dad; /* Roxo */
+    padding: 20px;
+    text-align: center;
+    color: white;
+    width: 100%;  /* Garante que o header ocupe toda a largura */
+}
+
+header img {
+    width: 50px;
+    height: auto;
+    position: absolute;
+    left: 20px;
+}
+
+header h1 {
+    flex: 1;
+    text-align: center;
+    margin: 0;
+}
+
+footer {
+    background-color: #6a0dad;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    margin-top: auto; /* Faz o footer ir para o fundo da página */
+}
+
+#lista-tabelas {
+    display: flex;
+    flex-wrap: wrap; /* Permite que as tabelas se ajustem em múltiplas linhas */
+    justify-content: center; /* Centraliza as tabelas dentro do contêiner */
+    gap: 20px; /* Espaçamento entre as tabelas */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.titulo-tabela {
+    background-color: #6a0dad;
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: -20px;
+    text-align: center;
+}
+
+
+main {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Garante 2 colunas para as tabelas */
+    gap: 20px; /* Espaçamento entre as tabelas */
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para destacar as tabelas */
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table th {
+    background-color: #6a0dad;
+    color: white;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr; /* Em telas pequenas, as tabelas ficam uma sobre a outra */
+    }
+
+    table {
+        max-width: 100%;
+    }
+}
