@@ -5,6 +5,7 @@ body {
     padding: 0;
     color: #333;
     display: flex;
+    align-items: center;
     flex-direction: column;
     min-height: 100vh; /* Garante que o body ocupe pelo menos 100% da altura da tela */
 }
@@ -54,14 +55,14 @@ footer {
     font-size: 2em;
     font-weight: bold;
     color: white;
-    margin-bottom: -20px;
+    margin-bottom: 0px;
     text-align: center;
 }
 
 
 main {
     display: grid;
-    grid-template-columns: repeat(1, 1fr); /* Garante 2 colunas para as tabelas */
+    grid-template-columns: repeat(2, 1fr); /* Garante 2 colunas para as tabelas */
     gap: 20px; /* Espaçamento entre as tabelas */
     justify-content: center;
     width: 100%;
@@ -101,6 +102,13 @@ table tbody tr:hover {
     }
 
     table {
-        max-width: 100%;
+        max-width: 100%; /* Garantir que a tabela não ultrapasse a largura */
+        width: 100%; /* A tabela deve ocupar 100% da largura disponível */
+        table-layout: fixed; /* Pode ajudar a controlar melhor o layout da tabela */
+    }
+
+    /* Adicionando rolagem horizontal caso a tabela ultrapasse a largura da tela */
+    #lista-tabelas {
+        overflow-x: auto; /* Adiciona rolagem horizontal ao contêiner */
     }
 }
